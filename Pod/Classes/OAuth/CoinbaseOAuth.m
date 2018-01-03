@@ -22,7 +22,7 @@ static NSURL * __strong baseURL;
                                                                        scope:(NSString *)scope
                                                                  redirectUri:(NSString *)redirectUri
                                                                         meta:(NSDictionary *)meta {
-    return [CoinbaseOAuth startOAuthAuthenticationWithClientId:clientId scope:scope redirectUri:redirectUri meta:meta layout:nil];
+    return [CoinbaseOAuth startOAuthAuthenticationWithClientId:clientId scope:scope redirectUri:redirectUri meta:meta layout:nil account:nil];
 }
 
 
@@ -30,7 +30,25 @@ static NSURL * __strong baseURL;
                                                                        scope:(NSString *)scope
                                                                  redirectUri:(NSString *)redirectUri
                                                                         meta:(NSDictionary *)meta
-                                                                      layout:(NSString *)layout {
+                                                                     account:(NSDictionary *)account {
+    return [CoinbaseOAuth startOAuthAuthenticationWithClientId:clientId scope:scope redirectUri:redirectUri meta:meta layout:nil account:account];
+}
+
+
++ (CoinbaseOAuthAuthenticationMechanism)startOAuthAuthenticationWithClientId:(NSString *)clientId
+                                                                       scope:(NSString *)scope
+                                                                 redirectUri:(NSString *)redirectUri
+                                                                        meta:(NSDictionary *)meta
+                                                                     layout:(NSDictionary *)layout {
+    return [CoinbaseOAuth startOAuthAuthenticationWithClientId:clientId scope:scope redirectUri:redirectUri meta:meta layout:layout account:nil];
+}
+
++ (CoinbaseOAuthAuthenticationMechanism)startOAuthAuthenticationWithClientId:(NSString *)clientId
+                                                                       scope:(NSString *)scope
+                                                                 redirectUri:(NSString *)redirectUri
+                                                                        meta:(NSDictionary *)meta
+                                                                      layout:(NSString *)layout
+                                                                     account:(NSString *)account {
     NSString *path = [NSString stringWithFormat: @"/oauth/authorize?response_type=code&client_id=%@", clientId];
     if (scope) {
         path = [path stringByAppendingFormat:@"&scope=%@", [self URLEncodedStringFromString:scope]];
@@ -45,6 +63,9 @@ static NSURL * __strong baseURL;
     }
     if (layout) {
         path = [path stringByAppendingFormat:@"&layout=%@", [self URLEncodedStringFromString:layout]];
+    }
+    if (account) {
+        path = [path stringByAppendingFormat:@"&account=%@", [self URLEncodedStringFromString:account]];
     }
 
     CoinbaseOAuthAuthenticationMechanism mechanism = CoinbaseOAuthMechanismNone;

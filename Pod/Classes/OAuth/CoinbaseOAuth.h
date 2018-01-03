@@ -50,6 +50,27 @@ NS_EXTENSION_UNAVAILABLE_IOS("OAuth is currently not allowed in extensions")
                                                                         meta:(NSDictionary *)meta
                                                                       layout:(NSString *)layout;
 
+/// Start the OAuth authentication process. This will open a different application to complete the
+/// authentication flow.
+///
+/// @return the mechanism of authentication. Example: CoinbaseOAuthMechanismApp
++ (CoinbaseOAuthAuthenticationMechanism)startOAuthAuthenticationWithClientId:(NSString *)clientId
+                                                                       scope:(NSString *)scope
+                                                                 redirectUri:(NSString *)redirectUri
+                                                                        meta:(NSDictionary *)meta
+                                                                     account:(NSString *)account;
+
+/// Start the OAuth authentication process. This will open a different application to complete the
+/// authentication flow.
+///
+/// @return the mechanism of authentication. Example: CoinbaseOAuthMechanismApp
++ (CoinbaseOAuthAuthenticationMechanism)startOAuthAuthenticationWithClientId:(NSString *)clientId
+                                                                       scope:(NSString *)scope
+                                                                 redirectUri:(NSString *)redirectUri
+                                                                        meta:(NSDictionary *)meta
+                                                                      layout:(NSString *)layout
+                                                                     account:(NSString *)account;
+
 /// Finish the OAuth authentication process. This should be called when your application is opened
 /// for a Coinbase OAuth URI.
 ///
